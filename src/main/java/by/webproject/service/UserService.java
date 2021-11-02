@@ -37,17 +37,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = getByLogin(s);
+        User user = userRepository.findByUsername(s);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
         return user;
-    }
-
-    public User getByLogin(String login) {
-        return userRepository.findAll().stream()
-                .filter(user -> login.equals(user.getUsername())).findFirst().orElse(null);
     }
 
     public UserDTO findUserById(long id) {
@@ -66,7 +61,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        userDB.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        userDB.setRoles(Collections.singleton(roleRepository.getById(2L)));
         userDB.setPassword(bcpe.encode(user.getPassword()));
         userRepository.save(userDB);
         return true;

@@ -1,5 +1,6 @@
 package by.webproject.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Entity
@@ -23,12 +25,12 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "User_Roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> role;
+    private Set<Role> roles = new HashSet<>();
 
     public int getId() {
         return id;
@@ -80,10 +82,10 @@ public class User implements UserDetails {
     }
 
     public Set<Role> getRoles() {
-        return role;
+        return roles;
     }
 
     public void setRoles(Set<Role> roles) {
-        this.role = roles;
+        this.roles = roles;
     }
 }

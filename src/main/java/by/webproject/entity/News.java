@@ -1,7 +1,6 @@
 package by.webproject.entity;
 
 import javax.persistence.*;
-import javax.xml.crypto.Data;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -22,6 +21,9 @@ public class News {
 
     @Column
     private String content;
+
+    @Column
+    private ZonedDateTime publish_date;
 
     public Long getId() {
         return id;
@@ -61,6 +63,14 @@ public class News {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public ZonedDateTime getPublish_date() {
+        return publish_date;
+    }
+
+    public void setPublish_date(ZonedDateTime publish_date) {
+        this.publish_date = publish_date;
     }
 
 }

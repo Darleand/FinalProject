@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthenticationEntryPointImpl authEntryPoint;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -22,10 +24,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().authorizeRequests()
                 .antMatchers("web/auth").permitAll()
-                .antMatchers("/web/registration").not().fullyAuthenticated()
+                .antMatchers("/web/registration").permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/web/news").hasRole("USER")
-                .and().formLogin().loginPage("/web/auth")
+                .and().httpBasic().authenticationEntryPoint(authEntryPoint)
                 .and().logout().permitAll().logoutSuccessUrl("/");
     }
 

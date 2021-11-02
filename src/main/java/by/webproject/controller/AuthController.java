@@ -19,11 +19,12 @@ public class AuthController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
     private final UserService userService;
 
+
     public AuthController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/auth")
     public UserDTO auth(Principal principal) {
         LOGGER.debug("User {} logged in", principal.getName());
         UserDTO user = new UserDTO();
