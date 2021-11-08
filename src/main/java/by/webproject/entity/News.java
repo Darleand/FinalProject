@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column
     private String title;
@@ -25,11 +25,11 @@ public class News {
     @Column
     private ZonedDateTime publish_date;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

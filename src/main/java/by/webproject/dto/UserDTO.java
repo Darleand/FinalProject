@@ -8,13 +8,22 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Set;
 
 public class UserDTO {
     private String passwordConfirm;
+    @NotNull
+    @NotEmpty
     private String username;
+    @NotNull
+    @NotEmpty
     private String password;
+    @NotNull
+    @NotEmpty
+    private String email;
     private Set<Role> roles;
 
     public Set<Role> getRoles() {
@@ -23,6 +32,14 @@ public class UserDTO {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPasswordConfirm() {

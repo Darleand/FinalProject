@@ -3,20 +3,41 @@ package by.webproject.dto;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import java.time.ZonedDateTime;
 
-@Component
 public class NewsDTO {
-    private Long id;
+    private long id;
+    @NotBlank
     private String title;
+    @NotBlank
     private String announce;
+    @NotBlank
     private String content;
+    private ZonedDateTime create_date;
+    private ZonedDateTime publish_date;
 
-    public Long getId() {
+    public ZonedDateTime getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(ZonedDateTime create_date) {
+        this.create_date = create_date;
+    }
+
+    public ZonedDateTime getPublish_date() {
+        return publish_date;
+    }
+
+    public void setPublish_date(ZonedDateTime publish_date) {
+        this.publish_date = publish_date;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

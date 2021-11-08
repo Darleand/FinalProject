@@ -1,14 +1,12 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/newsdatabase
+    url: jdbc:postgresql://localhost:5432/postgres
     username: ark
-    password: 1234root
+    password: 1234
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
-server:
-  port: 8080
-  servlet:
-    context-path: /
 cors:
   ui-url: http://localhost:4200
+
+---

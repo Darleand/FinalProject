@@ -3,18 +3,15 @@ package by.webproject.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
-import java.util.Collection;
+import javax.validation.constraints.Email;
 
 @Entity
-@Table(name = "users", schema = "news_schema")
+@Table(name = "users")
 @Component
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -25,12 +22,24 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "User_Roles",
+    @Column
+    @Email
+    private String email;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            inverseJoinColumns = @JoinColumn(name = "role_name")
     )
     private Set<Role> roles = new HashSet<>();
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getId() {
         return id;
@@ -44,33 +53,8 @@ public class User implements UserDetails {
         return username;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
     }
 
     public String getPassword() {
